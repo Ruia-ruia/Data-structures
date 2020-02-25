@@ -62,16 +62,21 @@ class Graph{
   
   setup(){
     for (var i = 0; i < this.nodes.length; i++){
-      this.paths.push(new Vertex(this.nodes[i]))
+      const vertexObject = new Vertex(this.nodes[i]);
+      this.paths.push(vertexObject);
+      
+      
     }
-    console.log(this.paths);
   }
 }
 
 nodes = [
-  {A:0, B:2},
-  {B:0, A:2}
+  {A:0, B:2, C:3},
+  {B:0, A:2},
+  {C:0, A:3}
 ]
 
 var graph1 = new Graph(nodes);
 graph1.setup();
+
+console.log(graph1.paths);
