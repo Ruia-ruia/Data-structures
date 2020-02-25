@@ -11,12 +11,12 @@ class PQueue{
   }
 
   set(elem, p){
-    if (typeof elem != 'string') { return -1; }
-    else if (typeof p != 'number') { return -1; }
+    if (typeof elem != 'string') return -1; 
+    else if (typeof p != 'number') return -1; 
 
     var qitem = new QElem(elem, p);
     var flag = false;
-
+    
     for(var i = 0; i < this.items.length; i++){
       if(this.items[i].p > qitem.p){
         this.items.splice(i, 0, qitem);
@@ -24,6 +24,7 @@ class PQueue{
         break;
       }
     }
+  
     if(!flag){
       this.items.push(qitem);
     }
@@ -32,8 +33,7 @@ class PQueue{
   unset(){
      if(this.items.length !== 0){
        return this.items.shift();
-     }
-     else console.log("Empty");
+     } else console.log("Empty.");
    }
   
   get(index){
@@ -45,10 +45,18 @@ class PQueue{
   }
 }
 
+var pQ = new PQueue(); //set(el, p), unset(), get(index), size()
 
-var pQ = new PQueue();
-pQ.set("C", 2);
-pQ.set("B", 4);
-pQ.set("A", 3);
-var y = pQ.get(pQ.size() - 1);
-console.log(y);
+class Vertex{
+  constructor(Edist){
+    this.Edist = Edist;
+    this.edges = Object.keys(this.Edist);
+    this.dists = Object.values(this.Edist);
+  }
+}
+
+var Aedges = {A:0, B:3, C:4};
+
+var v1 = new Vertex(Aedges);
+
+console.log(v1.Edist);
