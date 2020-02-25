@@ -50,8 +50,5 @@ var pQ = new PQueue();
 pQ.set("C", 2);
 pQ.set("B", 4);
 pQ.set("A", 3);
-//var x = pQ.unset();
-//console.log(pQ.items);
-//console.log(x);
 var y = pQ.get(pQ.size() - 1);
 console.log(y);
