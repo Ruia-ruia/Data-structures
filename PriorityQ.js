@@ -11,8 +11,8 @@ class PQueue{
   }
 
   set(elem, p){
-    if (typeof p != 'number') { return -1; }
-    else if (typeof elem != 'string') { return -1; }
+    if (typeof elem != 'string') { return -1; }
+    else if (typeof p != 'number') { return -1; }
 
     var qitem = new QElem(elem, p);
     var flag = false;
@@ -41,10 +41,8 @@ class PQueue{
   }
   
   size(){
-    return this.items.length;
+   return this.items.length;
   }
-  
-  
 }
 
 
