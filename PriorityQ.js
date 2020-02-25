@@ -10,30 +10,50 @@ class PQueue{
     this.items = [];
   }
 
-  enqueue(elem, p){
+  set(elem, p){
     if (typeof p != 'number') { return -1; }
     else if (typeof elem != 'string') { return -1; }
 
     var qitem = new QElem(elem, p);
-    var contain = false;
+    var flag = false;
 
     for(var i = 0; i < this.items.length; i++){
       if(this.items[i].p > qitem.p){
         this.items.splice(i, 0, qitem);
-        contain = true;
+        flag = true;
         break;
       }
     }
-    if(!contain){
+    if(!flag){
       this.items.push(qitem);
     }
   }
-
-
+   
+  unset(){
+     if(this.items.length !== 0){
+       return this.items.shift();
+     }
+     else console.log("Empty");
+   }
+  
+  get(index){
+    return this.items[index];
+  }
+  
+  size(){
+    return this.items.length;
+  }
+  
+  
 }
 
+
 var pQ = new PQueue();
-pQ.enqueue("C", 2);
-pQ.enqueue("B", 4);
-pQ.enqueue("A", 3);
-console.log(pQ.items)
+pQ.set("C", 2);
+pQ.set("B", 4);
+pQ.set("A", 3);
+//var x = pQ.unset();
+//console.log(pQ.items);
+//console.log(x);
+var y = pQ.get(pQ.size() - 1);
+console.log(y);
