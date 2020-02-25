@@ -95,14 +95,14 @@ class Graph {
 
 var nodes = [
   {A:0, B:2, C:3},
-  {B:0, A:2},
+  {B:0, A:2, D:7, F: 5, H:8},
   {C:0, A:3}
 ]
 
 var graph1 = new Graph(nodes);
 graph1.setup(); 
 console.log(graph1.vertices);
+ 
 
 
 
-console.log(graph1.paths);
