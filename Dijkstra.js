@@ -5,7 +5,7 @@ class QElem {
   }
 }
 
-class PQueue{
+class PQueue {
   constructor(){
     this.items = [];
   }
@@ -48,15 +48,30 @@ class PQueue{
 var pQ = new PQueue(); //set(el, p), unset(), get(index), size()
 
 class Vertex{
-  constructor(Edist){
-    this.Edist = Edist;
-    this.edges = Object.keys(this.Edist);
-    this.dists = Object.values(this.Edist);
+  constructor(nodeDict){
+    this.nodekeys = Object.keys(nodeDict);
+    this.nodevals = Object.values(nodeDict);
   }
 }
 
-var Aedges = {A:0, B:3, C:4};
+class Graph{
+  constructor(nodes){
+    this.nodes = nodes;
+    this.paths = [];
+  }
+  
+  setup(){
+    for (var i = 0; i < this.nodes.length; i++){
+      this.paths.push(new Vertex(this.nodes[i]))
+    }
+    console.log(this.paths);
+  }
+}
 
-var v1 = new Vertex(Aedges);
+nodes = [
+  {A:0, B:2},
+  {B:0, A:2}
+]
 
-console.log(v1.Edist);
+var graph1 = new Graph(nodes);
+graph1.setup();
