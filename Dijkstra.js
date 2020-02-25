@@ -47,36 +47,62 @@ class PQueue {
 
 var pQ = new PQueue(); //set(el, p), unset(), get(index), size()
 
-class Vertex{
-  constructor(nodeDict){
-    this.nodekeys = Object.keys(nodeDict);
-    this.nodevals = Object.values(nodeDict);
+class Edge { 
+  constructor(start, end, weight){
+    this.start = start;
+    this.end = end;
+    this.weight = weight;
+  }
+  
+  getWeight(){
+    return this.weight;
+  }
+  
+  getTermo(){
+    return this.end;
   }
 }
 
-class Graph{
+class Vertex {
+  constructor(nodeDict){
+    this.nodekeys = Object.keys(nodeDict);
+    this.nodevals = Object.values(nodeDict);
+    this.edges = [];
+  }
+  setup() {
+    for (var i = 1; i < this.nodevals.length; i++){
+      const newEdge = new Edge(this.nodekeys[0],         this.nodekeys[i], this.nodevals[i])
+    this.edges.push(newEdge)
+  }
+}
+
+}
+
+class Graph {
   constructor(nodes){
     this.nodes = nodes;
-    this.paths = [];
+    this.vertices = [];
   }
   
   setup(){
     for (var i = 0; i < this.nodes.length; i++){
       const vertexObject = new Vertex(this.nodes[i]);
-      this.paths.push(vertexObject);
-      
-      
+      this.vertices.push(vertexObject)
+      vertexObject.setup();
+      }
     }
-  }
 }
 
-nodes = [
+var nodes = [
   {A:0, B:2, C:3},
   {B:0, A:2},
   {C:0, A:3}
 ]
 
 var graph1 = new Graph(nodes);
-graph1.setup();
+graph1.setup(); 
+console.log(graph1.vertices);
+
+
 
 console.log(graph1.paths);
