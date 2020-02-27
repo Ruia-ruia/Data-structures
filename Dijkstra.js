@@ -96,8 +96,9 @@ class Graph {
 
 var nodes = [
   {A:0, B:2, C:3},
-  {B:0, A:2, D:7, F:5, H:8},
-  {C:0, A:3}
+  {B:0, A:2, C:4, D:7},
+  {C:0, A:3, B:4},
+  {D:0, B:7}
 ]
 var graph1 = new Graph(nodes);
 graph1.setup();
@@ -115,46 +116,38 @@ function getOffsetFromKey(key){
   }
 }
 
-/*
-p := priority
-0. set up pQ with Graph data (vertices, their edges [start, end, weight], and p-distance)
-1. set first element to distance p-0
-2. set all others to p-1000, where 1000 stands for infinity (see: Dijkstra specification)
-*/
-(function qNodes(){
-  pQ.set(graph1.vertices[0], 0);
+startNode = 'A';
+var distances = {};
 
-  for(i = 1; i < nodes.length; i++){
-    pQ.set(graph1.vertices[i], 1000);
+for(i = 0; i < nodes.length; i++){
+  node = nodes[i];
+  if(Object.keys(node)[0] === startNode) { distances[Object.keys(node)[0]] = 0; }
+  else { distances[Object.keys(node)[0]] = 1000;
+ }
+}
+pQ.set(graph1.vertices[0], 0);
+
+(function Djik(){
+  while(!(pQ.size() === 0)){
+    let cVertex = pQ.unset();
+    let weight = cVertex.p;
+    let edgeList = cVertex.elem.nodekeys;
+    let edgeObjectList = [];      
+
+    edgeList.forEach(name => {
+edgeObjectList.push(getOffsetFromKey(name))
+    });
+    
+    edgeObjectList.forEach(adj => {
+       let sum = distances[edgeList[0]] + adj.nodevals[1];
+
+       if(sum < distances[adj.nodekeys[0]]){
+         distances[adj.nodekeys[0]] = sum;
+         pQ.set(getOffsetFromKey(adj.nodekeys[0]), sum);
+       }
+    });
   }
 })();
 
-function findShortestPath(){
-  while(pQ.size() !== 0){
-    var qElem = pQ.unset();
-    var edges = qElem.elem.getEdges();
 
-    for(i in edges){
-      var edge = edges[i];
-      var destinationKey = edge.getTermo();
-      var destinationObject = getOffsetFromKey(destinationKey);
-      var newDistance = edge.getWeight() + qElem.p;
-
-    //  console.log(edge);
-      //console.log(destinationKey);
-      console.log(destinationObject);
-    //  console.log(newDistance);
-//      if(newDistance < destinationObject.){
-
-//      }
-    }
-
-    break;
-  }
-};
-
-findShortestPath();
- 
-
-
-
+console.log(distances);
