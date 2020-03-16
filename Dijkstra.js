@@ -65,7 +65,7 @@ this.nodes[node2].push({[node1]:work})
 /*
 main computations - discernment of shortest possible paths between startNode and all other nodes
 */
-function djik(){
+function dijkstra(){
    dists = {};
    pQ.set(entryNode, 0);
    backingStore = {};
@@ -111,4 +111,4 @@ g.initEdge('A', 'B', 3);
 g.initEdge('B', 'C', 5);
 
 var entryNode = 'A';
-console.log(djik());
+console.log(dijkstra());
