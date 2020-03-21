@@ -63,7 +63,7 @@ this.nodes[node2].push({[node1]:work})
 }
 
 /*
-main computations - discernment of shortest possible paths between startNode and all other nodes
+main computations - discernment of shortest possible paths between entryNode (e.g. 'A') and all other nodes
 */
 function dijkstra(){
    dists = {};
