@@ -57,8 +57,8 @@ class Graph {
    }
 
    initEdge(node1, node2, work){
-this.nodes[node1].push({[node2]:work})
-this.nodes[node2].push({[node1]:work})
+       this.nodes[node1].push({[node2]:work})
+       this.nodes[node2].push({[node1]:work})
    }
 }
 
