@@ -91,6 +91,7 @@ int engine(char **instructions, int len)
 
   printf("%d\n", stack[sp]);
   free(instr);
+  free(oper);
 
   return 0;
 }
