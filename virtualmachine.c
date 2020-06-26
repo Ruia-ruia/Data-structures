@@ -33,7 +33,6 @@ struct Registers {
   int C;
 };
 
-
 int interp(char *instr, char *oper)
 {
   int in;
@@ -60,7 +59,6 @@ int interp(char *instr, char *oper)
   return pc + 1;
 }
 
-
 int engine(char **instructions, int len)
 {
   if (len <= 0) return -1;
@@ -73,9 +71,9 @@ int engine(char **instructions, int len)
   instr = (char *) malloc(sizeof(char) * INSTR_LEN);
   oper = (char *) malloc(sizeof(char) * OPER_LEN);
 
-  //Potentially infinite tape
+  //potentially infinite tape
   while (pc != -1) {
-    //In the context of interpretation, 
+    //in the context of interpretation,
     //pc is an index for each entry in our .text memory
     int i = pc;
 
@@ -88,7 +86,7 @@ int engine(char **instructions, int len)
       }
     }
 
-    //Interpret instruction with operand and return updated PC
+    //interpret instruction with operand and return updated PC
     pc = interp(instr, &oper[i]);
   }
 
@@ -98,7 +96,6 @@ int engine(char **instructions, int len)
 
   return 0;
 }
-
 
 int main()
 {
