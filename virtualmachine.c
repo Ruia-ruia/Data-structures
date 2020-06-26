@@ -75,6 +75,8 @@ int engine(char **instructions, int len)
 
   //Potentially infinite tape
   while (pc != -1) {
+    //In the context of interpretation, 
+    //pc is an index for each entry in our .text memory
     int i = pc;
 
     for (int j = 0; j < strlen(instructions[i]); j++){
@@ -86,6 +88,7 @@ int engine(char **instructions, int len)
       }
     }
 
+    //Interpret instruction with operand and return updated PC
     pc = interp(instr, &oper[i]);
   }
 
