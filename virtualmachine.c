@@ -89,26 +89,6 @@ int engine(char **instructions, int len)
     pc = interp(instr, &oper[i]);
   }
 
-  /*
-  //process each instruction and its operands
-  for (int i = 0; i < len; i++){
-
-    for (int j = 0; j < strlen(instructions[i]); j++){
-      if (instructions[i][j] != ' ') {
-        instr[j] = instructions[i][j];
-
-      } else {
-        oper[i] = instructions[i][j + 1];
-      }
-    }
-
-    //interpret instruction with operand and update PC
-    int result = interp(instr, &oper[i]);
-    pc += 1;
-
-  }
-  */
-
   printf("%d\n", stack[sp]);
   free(instr);
 
