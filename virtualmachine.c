@@ -1,10 +1,10 @@
+  
 /*
 Units:
   - Instruction Set (HLT, PSH const, POP, SET reg const)
   - Stack
   - Instruction Pointer
   - Registers
-
 Functions:
   - Parse code text
   - Break into instructions and operands
@@ -19,9 +19,9 @@ Functions:
 #define OPER_LEN 2
 #define INSTR_LEN 3
 
-//global declarations
+//globals
 int stack[256];
-int pc = 0;
+signed int pc = 0;
 signed int sp = -1;
 
 enum instructions { PSH, POP, HLT, SET };
@@ -63,11 +63,9 @@ int engine(char **instructions, int len)
 {
   if (len <= 0) return -1;
 
-  signed int out;
   char *instr;
   char *oper;
 
-  out = 0;
   instr = (char *) malloc(sizeof(char) * INSTR_LEN);
   oper = (char *) malloc(sizeof(char) * OPER_LEN);
 
