@@ -6,7 +6,6 @@ Units:
 - Chunk linked list
 
 */
-
 #include <assert.h>
 #include <string.h>
 #include <sys/types.h>
@@ -52,23 +51,9 @@ void *get_free(size_t size) {
     chunkptr cursor;
     chunkptr user_ptr;
 
-    if (base == NULL) return NULL;
-    if (base->size == size) cursor = base; base = base->next; return cursor;
+    /* ...... */
 
-    cursor = base;
-    while (cursor->next) {
-        printf("searching freelist\n");
-
-        if (cursor->next->size == size) {
-            user_ptr = cursor->next;
-            cursor = user_ptr->next;
-            return user_ptr;
-        }
-
-        cursor = cursor->next;
-    }
-
-    //no free chunk / in free list / is appropriate size
+    
     return NULL;
 }
 
@@ -89,6 +74,7 @@ int freez(void *user_ptr) {
         head = tmp;
     }
 
+    printf("%p is head\n-------\n", head);
     return 0;
 }
 
@@ -143,13 +129,25 @@ int main() {
     freez(a);
     freez(b);
     freez(c);
+
+    /*
     char* d = mallocz(10);
     char* e = mallocz(10);
     char* f = mallocz(10);
     freez(d);
     freez(e);
     freez(f);
+    */
 
+    printf("%p is a\n", a);
+    printf("%p is b\n", b);
+    printf("%p is c\n", c);
+
+    /*
+    printf("%p is d\n", d);
+    printf("%p is e\n", e);
+    printf("%p is f\n", f);
+    */
 
     return 0;
 }
