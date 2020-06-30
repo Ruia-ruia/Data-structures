@@ -18,10 +18,10 @@ Units:
 
 /* UNITS (TYPES, PROTOTYPES) */
 
-typedef struct Meta_Chunk* chunkptr;
-typedef struct Meta_Chunk chunk;
+typedef struct meta_chunk* chunkptr;
+typedef struct meta_chunk chunk;
 
-struct Meta_Chunk {
+struct meta_chunk {
     chunkptr next;
     unsigned int free;
     unsigned int size;
