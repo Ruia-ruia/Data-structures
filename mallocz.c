@@ -70,9 +70,8 @@ int freez(void *user_ptr) {
     if (head == NULL) {
         head = cp;
     } else {
-        chunkptr tmp = cp;
         head->next = cp;
-        head = tmp;
+        head = cp;
     }
 
     printf("%p is head\n-------\n", head);
