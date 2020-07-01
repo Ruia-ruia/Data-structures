@@ -11,8 +11,9 @@ Units:
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
-#define SBRK_FAIL -1
+#define SBRK_FAIL ((void*) -1)
 
 /* UNITS (TYPES, PROTOTYPES) */
 
@@ -62,7 +63,7 @@ void *get_free(size_t size) {
     save_ptr = base;
 
     while (cursor) {
-        
+
         if (cursor->size == size) {
             save_ptr->next = cursor->next;
             cursor->next = NULL;
@@ -73,7 +74,6 @@ void *get_free(size_t size) {
         cursor = cursor->next;
     }
 
-    
     return NULL;
 }
 
@@ -107,10 +107,11 @@ void *mallocz(size_t size) {
     chunk meta;
 
     if (size < 0) return NULL;
+    if (size == 0) size = 8;
+
     aligned_size = aligned(size);
-    
     freed_ptr = get_free(aligned_size);
-    
+
     if (freed_ptr) {
         printf("Found a chunk in the freelist.\n");
         user_ptr = freed_ptr + meta_size;
@@ -142,15 +143,18 @@ void *mallocz(size_t size) {
 int main(void) {
 
 /* testing */
-
     char* a = mallocz(20);
+    freez(a);
+    char* b = mallocz(20);
+    freez(b);
+
+    /*
     char* b = mallocz(10);
     char* c = mallocz(10);
-    freez(a);
     freez(b);
     freez(c);
 
-    
+    /*
     char* d = mallocz(10);
     char* e = mallocz(10);
     char* f = mallocz(20);
@@ -163,7 +167,6 @@ int main(void) {
     char* g = mallocz(10);
     char* h = mallocz(10);
     char* i = mallocz(10);
-    */
 
     printf("%p was a\n", a);
     printf("%p was b\n", b);
@@ -173,7 +176,7 @@ int main(void) {
     printf("%p was d\n", d);
     printf("%p was e\n", e);
     printf("%p was f\n", f);
-
+    */
 
     return 0;
 }
