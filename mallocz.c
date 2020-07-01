@@ -1,10 +1,8 @@
 /*
 ~~ Work in progress ~~
-
 Units:
 - Chunk struct
 - Chunk linked list
-
 */
 
 #include <assert.h>
@@ -19,13 +17,12 @@ Units:
 /* UNITS (TYPES, PROTOTYPES) */
 
 typedef struct meta_chunk* chunkptr;
-typedef struct meta_chunk chunk;
 
-struct meta_chunk {
+typedef struct meta_chunk {
     chunkptr next;
     unsigned int free;
     unsigned int size;
-};
+} chunk;
 
 /* GLOBALS */
 
@@ -50,9 +47,31 @@ int aligned(int x) {
 
 void *get_free(size_t size) {
     chunkptr cursor;
-    chunkptr user_ptr;
+    chunkptr save_ptr;
+    
+    if (base == NULL) return NULL;
 
-    /* ...... */
+    if (base->size == size) {
+        save_ptr = base; 
+        base = base->next; 
+        save_ptr->next = NULL; 
+        return save_ptr;
+    } 
+
+    cursor = base;
+    save_ptr = base;
+
+    while (cursor) {
+        
+        if (cursor->size == size) {
+            save_ptr->next = cursor->next;
+            cursor->next = NULL;
+            return cursor;
+        }
+
+        save_ptr = cursor;
+        cursor = cursor->next;
+    }
 
     
     return NULL;
@@ -88,11 +107,10 @@ void *mallocz(size_t size) {
     chunk meta;
 
     if (size < 0) return NULL;
-    if (size == 0) size = 8;
-
     aligned_size = aligned(size);
+    
     freed_ptr = get_free(aligned_size);
-
+    
     if (freed_ptr) {
         printf("Found a chunk in the freelist.\n");
         user_ptr = freed_ptr + meta_size;
@@ -101,14 +119,16 @@ void *mallocz(size_t size) {
 
     printf("Did not find chunk in the freelist.\n");
 
-    meta_size = sizeof(meta);
     meta.next = NULL;
     meta.free = 0;
     meta.size = aligned_size;
+    meta_size = sizeof(meta);
 
     p = sbrk(0);
-    if (p != SBRK_FAIL) {
+    if (p == SBRK_FAIL) {
+        user_ptr = NULL;
 
+    } else {
         ret = sbrk(meta_size + aligned_size);
         assert(p == ret);
 
@@ -119,35 +139,41 @@ void *mallocz(size_t size) {
     return user_ptr;
 }
 
-int main() {
+int main(void) {
 
 /* testing */
 
-    char* a = mallocz(10);
+    char* a = mallocz(20);
     char* b = mallocz(10);
     char* c = mallocz(10);
     freez(a);
     freez(b);
     freez(c);
 
-    /*
+    
     char* d = mallocz(10);
     char* e = mallocz(10);
-    char* f = mallocz(10);
+    char* f = mallocz(20);
+
+    /*
     freez(d);
     freez(e);
     freez(f);
+    
+    char* g = mallocz(10);
+    char* h = mallocz(10);
+    char* i = mallocz(10);
     */
 
-    printf("%p is a\n", a);
-    printf("%p is b\n", b);
-    printf("%p is c\n", c);
+    printf("%p was a\n", a);
+    printf("%p was b\n", b);
+    printf("%p was c\n", c);
 
-    /*
-    printf("%p is d\n", d);
-    printf("%p is e\n", e);
-    printf("%p is f\n", f);
-    */
+    
+    printf("%p was d\n", d);
+    printf("%p was e\n", e);
+    printf("%p was f\n", f);
+
 
     return 0;
 }
